@@ -9,7 +9,7 @@ const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemi
 // const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
 
 export const generateEmail = async (keyPoints) => {
-    console.log("Google API Key from geminiService.js:", process.env.GOOGLE_GEMINI_API_KEY);
+    // console.log("Google API Key from geminiService.js:", process.env.GOOGLE_GEMINI_API_KEY);
 
     try {
         const response = await axios.post(

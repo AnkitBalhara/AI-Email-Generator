@@ -1,15 +1,34 @@
 import { useContext } from "react";
 import { EmailContext } from "../context/EmailContext";
+import axios from "axios";
 
 export default function InputFields() {
-  const { emails, setEmails, keyPoints, setKeyPoints, validateEmails, validateKeyPoints } = useContext(EmailContext);
+  const { emails, setEmails, keyPoints, setKeyPoints, validateEmails, validateKeyPoints,setGeneratedEmail,setSubject } = useContext(EmailContext);
 
-  const handleGenerateEmail = () => {
+  const handleGenerateEmail =async () => {
     if (!validateEmails(emails) || !validateKeyPoints()) {
       alert("Please correct the errors before generating the email.");
       return;
     }
+
+    try {
+      const connection = await axios.post("http://localhost:5000/api/email/generate", {
+        keyPoints:keyPoints
+      });
+      console.log("Key points passed successful : -",connection.data.emailBody)
+
+      let emailBody=connection.data.emailBody
+      let emailSubject = emailBody.split("\n")[0]
+      let contentBody =emailBody.split(emailSubject+"\n\n")[1]
+      setGeneratedEmail(contentBody)
+      setSubject(emailSubject)
+      // setGeneratedEmail(emailBody)
+    } catch (error) {
+      console.log("Error in Connection with the Backend")
+    }
+    
     console.log("Generating email with:", { emails, keyPoints });
+
   };
 
   return (
@@ -36,7 +55,7 @@ export default function InputFields() {
 
       {/* Generate Email Button */}
       <button
-        className="w-full px-4 py-2 bg-blue-500 text-white rounded"
+        className="w-full px-4 py-2 bg-blue-500 text-white rounded cursor-pointer"
         onClick={handleGenerateEmail}
       >
         Generate Email

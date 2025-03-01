@@ -3,7 +3,15 @@ import { EmailContext } from "../context/EmailContext";
 import axios from "axios";
 
 export default function GeneratedEmail() {
-  const { emails, subject, setSubject, generatedEmail, setGeneratedEmail, validateEmails, validateKeyPoints } = useContext(EmailContext);
+  const {
+    emails,
+    subject,
+    setSubject,
+    generatedEmail,
+    setGeneratedEmail,
+    validateEmails,
+    validateKeyPoints,
+  } = useContext(EmailContext);
 
   const handleSendEmail = async () => {
     if (!validateEmails(emails) || !validateKeyPoints()) {
@@ -12,10 +20,10 @@ export default function GeneratedEmail() {
     }
 
     try {
-      await axios.post("http://localhost:5000/send-email", {
-        emails: emails.split(",").map(email => email.trim()),
+      await axios.post("http://localhost:5000/api/email/send", {
+        recipients: emails.split(",").map((email) => email.trim()),
         subject,
-        message: generatedEmail
+        emailBody: generatedEmail,
       });
       alert("Emails sent successfully!");
     } catch (error) {
@@ -27,14 +35,14 @@ export default function GeneratedEmail() {
   return (
     <div className="p-6 space-y-4 border rounded-lg shadow-md bg-white">
       <h2 className="text-lg font-medium">Generated Email</h2>
-      
+
       <input
         type="text"
         className="w-full p-2 border rounded font-bold"
         value={subject}
-        onChange={(e) => setSubject(e.target.value)}
+        // onChange={(e) => setSubject(e.target.value)}
       />
-      
+
       <textarea
         className="w-full p-2 border rounded"
         rows="6"
