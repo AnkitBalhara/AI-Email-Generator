@@ -52,7 +52,7 @@ export default function GeneratedEmail() {
 
       {/* Send Email Button */}
       <button
-        className="w-full px-4 py-2 bg-green-500 text-white rounded"
+        className="w-full px-4 py-2 bg-green-500 text-white rounded cursor-pointer"
         onClick={handleSendEmail}
       >
         Send Email

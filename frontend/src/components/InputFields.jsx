@@ -15,7 +15,7 @@ export default function InputFields() {
       const connection = await axios.post("http://localhost:5000/api/email/generate", {
         keyPoints:keyPoints
       });
-      console.log("Key points passed successful : -",connection.data.emailBody)
+      // console.log("Key points passed successful : -",connection.data.emailBody)
 
       let emailBody=connection.data.emailBody
       let emailSubject = emailBody.split("\n")[0]
@@ -27,7 +27,7 @@ export default function InputFields() {
       console.log("Error in Connection with the Backend")
     }
     
-    console.log("Generating email with:", { emails, keyPoints });
+    // console.log("Generating email with:", { emails, keyPoints });
 
   };
 
